@@ -13,15 +13,15 @@ class Student
 	string birthday;
 	string gender;
 	string classStudent;
-	float scoreMath, scorePhys, scoreTech;
-	float scoreAverage;
+	double scoreMath, scorePhys, scoreTech;
+	double scoreAverage;
 	int scholarship;
-
 	Student *next;
 
 public:
 	Student();
 	~Student();
+	double getIntRange(double low, double high);
 	friend istream& operator >> (istream& in, Student &a);
 	friend ostream& operator << (ostream& out, Student &a);
 	friend class List;

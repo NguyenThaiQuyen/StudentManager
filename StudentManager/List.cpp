@@ -87,70 +87,76 @@ void List::DisplayOneStudent(Student &a, int k)
 // add  and insert object
 void List::AddSortID(Student *p)
 {
-	Student* before = NULL;
-	Student* after;
-	after = F;
-	while (after != NULL)
+	// check same Id;
+	Student* t = F;
+	while (t != NULL && t->IDstudent != p->IDstudent)
 	{
-		if (after->IDstudent == p->IDstudent)
+		t = t->next;
+	}
+	if (t == NULL)
+	{
+		Student* before = NULL;
+		Student* after;
+		after = F;
+		while (after != NULL)
 		{
-			cout << "\nID existed! ";
-			return;
+			if (after->IDstudent == p->IDstudent)
+			{
+				cout << "\nID existed! ";
+				return;
+			}
+			after = after->next;
 		}
-		after = after->next;
-	}
-	after = F;
-	while (after != NULL && (after->IDstudent < (p->IDstudent) ) )
-	{
-		before = after;
-		after = after->next;
-	}
+		after = F;
+		while (after != NULL && (after->IDstudent < (p->IDstudent)))
+		{
+			before = after;
+			after = after->next;
+		}
 
-	p->next = after;
-	if (F == after)
-	{
-		F = p;
+		p->next = after;
+		if (F == after)
+		{
+			F = p;
+		}
+		else
+		{
+			before->next = p;
+		}
 	}
 	else
 	{
-		before->next = p;
+		cout << "\n ID student exist!" << endl;
 	}
+	
 }
 
 void List::AddTheFirst(Student *p)
 {
-	Student* after = NULL;
-	while (after != NULL)
+	Student* t = F;
+	while (t != NULL && t->IDstudent != p->IDstudent)
 	{
-		if (after->IDstudent == p->IDstudent)
-		{
-			cout << "\nID existed! ";
-			return;
-		}
-		after = after->next;
+		t = t->next;
 	}
-	p->next = F;
-	F = p;
-}
-
-
-int List::getIntRange(int low, int high)
-{
-	int input;
-	while (true)
+	if (t == NULL)
 	{
-		cin >> input;
-		if (input < low || input > high)
+		Student* after = NULL;
+		while (after != NULL)
 		{
-			cout << "Value invalid!\n";
-			cout << "\nEnter again: ";
+			if (after->IDstudent == p->IDstudent)
+			{
+				cout << "\nID existed! ";
+				return;
+			}
+			after = after->next;
 		}
-		else
-		{
-			break;
-		}
+		p->next = F;
+		F = p;
 	}
-	return input;
+	else
+	{
+		cout << "\n ID student exist!" << endl;
+	}
 }
 
 // search student
@@ -170,7 +176,8 @@ void List::Search()
 	cout << "10.By Scholarship." << endl;
 
 	cout << "\nEnter your choice : ";
-	choice = getIntRange(0, 10);
+	Student a;
+	choice =getIntRange(0, 10);
 
 	switch (choice)
 	{
@@ -260,33 +267,33 @@ void List::Search()
 	}
 	case 6:
 	{
-		float is_scoreMath;
+		double is_scoreMath;
 		cout << "Enter score Math you want to seach: ";
-		cin >> is_scoreMath;
+		is_scoreMath = a.getIntRange(0.0, 10.0);
 		SearchMath(is_scoreMath);
 		break;
 	}
 	case 7:
 	{
-		float  is_scorePhys;
+		double  is_scorePhys;
 		cout << "Enter score Math you want to seach: ";
-		cin >> is_scorePhys;
+		is_scorePhys = a.getIntRange(0.0, 10.0);
 		SearchPhysical(is_scorePhys);
 		break;
 	}
 	case 8:
 	{
-		float is_scoreTech;
+		double is_scoreTech;
 		cout << "Enter score Math you want to seach: ";
-		cin >> is_scoreTech;
+		is_scoreTech  = a.getIntRange(0.0, 10.0);
 		SearchTechnology(is_scoreTech);
 		break;
 	}
 	case 9:
 	{
-		float is_Average;
+		double is_Average;
 		cout << "Enter score Average you want to seach: ";
-		cin >> is_Average;
+		is_Average =a.getIntRange(0.0, 10.0);
 		SearchAverage(is_Average);
 		break;
 	}
@@ -403,7 +410,7 @@ void List::SearchClass(string is_classStudent)
 	}
 }
 
-void List::SearchMath(float is_scoreMath)
+void List::SearchMath(double is_scoreMath)
 {
 	Student *p = NULL;
 	p = F;
@@ -419,7 +426,7 @@ void List::SearchMath(float is_scoreMath)
 	}
 }
 
-void List::SearchPhysical(float is_scorePhys)
+void List::SearchPhysical(double is_scorePhys)
 {
 	Student *p = NULL;
 	p = F;
@@ -435,7 +442,7 @@ void List::SearchPhysical(float is_scorePhys)
 	}
 }
 
-void List::SearchTechnology(float is_scoreTech)
+void List::SearchTechnology(double is_scoreTech)
 {
 	Student *p = NULL;
 	p = F;
@@ -451,7 +458,7 @@ void List::SearchTechnology(float is_scoreTech)
 	}
 }
 
-void List::SearchAverage(float is_Average)
+void List::SearchAverage(double is_Average)
 {
 	Student *p = NULL;
 	p = F;
@@ -493,10 +500,10 @@ void List::Swap(Student* a, Student* b)
 	string tmp_birthday = a->birthday;
 	string tmp_gender = a->gender;
 	string tmp_classStudent = a->classStudent;
-	float tmp_scoreMath =a->scoreMath;
-	float tmp_scorePhys = a->scorePhys;
-	float tmp_scoreTech =a->scoreTech;
-	float tmp_scoreAverage = a->scoreAverage;
+	double tmp_scoreMath =a->scoreMath;
+	double tmp_scorePhys = a->scorePhys;
+	double tmp_scoreTech =a->scoreTech;
+	double tmp_scoreAverage = a->scoreAverage;
 	int tmp_scholarship = a->scholarship;
 
 	a->IDstudent = b->IDstudent;
@@ -553,6 +560,7 @@ void List::Sort()
 	cout << "\n1.Ascending." << endl;
 	cout << "\n2.Descending." << endl;
 	cout << "\nEnter your choice: ";
+	Student a;
 	int choice = getIntRange(1, 2);
 
 	switch (choice)
@@ -566,6 +574,24 @@ void List::Sort()
 	}
 }
 
+int List::getIntRange(int low, int high)
+{
+	int input;
+	while (true)
+	{
+		cin >> input;
+		if (input < low || input > high)
+		{
+			cout << "Value invalid!\n";
+			cout << "\nEnter again: ";
+		}
+		else
+		{
+			break;
+		}
+	}
+	return input;
+}
 // delete student
 void List::DeleteByID(string is_ID)
 {
@@ -608,5 +634,43 @@ void List::DeleteByFemale08()
 // List class have scholarship
 void List::DisplayScholaship()
 {
-
+	Student* p;
+	string *arrClass = new string[100];
+	int *arrCount = new int[100]();
+	int *arrCountClass = new int[100]();
+	int count = 1;
+	p = F;
+	*(arrClass) = p->classStudent;
+	(*(arrCountClass))++;
+	if (p->scholarship >= 100)
+	{
+		(*(arrCount))++;
+	}
+	p = p->next;
+	while (p != NULL)
+	{
+		int i;
+		for (i = 0; i < count; i++)
+		{
+			if (p->classStudent == *(arrClass + i))
+			{
+				(*(arrCountClass + i))++;
+				if (p->scholarship >= 100) (*(arrCount + i))++;
+				break;
+			}
+		}
+		if (i == count)
+		{
+			*(arrClass + count) = p->classStudent;
+			(*(arrCountClass + count))++;
+			if (p->scholarship >= 100) (*(arrCount + count))++;
+			count++;
+		}
+		p = p->next;
+	}
+	cout << left << setw(15) << "CLASS " << left << setw(20) << "TOTAL STUDENT " << left << setw(25) << "TOTAL SCHOLARSHIP " << endl;
+	for (int i = 0; i < arrClass->length(); i++)
+	{
+		cout << left << setw(15) << *(arrClass + i) << left << setw(20) << (*(arrCountClass + i)) << left << setw(25) << *(arrCount + i) << endl;
+	}
 }

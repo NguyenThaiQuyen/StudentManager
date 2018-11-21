@@ -56,6 +56,7 @@ istream& operator >> (istream& in, Student &a)
 		getline(in, a.classStudent);
 		if (a.classStudent.length() == 4 && a.classStudent[2] == toupper('t'))
 		{
+			a.classStudent[2] = toupper('t');
 			if (a.classStudent[0] >= '0' && a.classStudent[0] <= '9')
 			{
 				if (a.classStudent[1] >= '0' && a.classStudent[1] <= '9')
@@ -70,9 +71,12 @@ istream& operator >> (istream& in, Student &a)
 
 	} while (a.classStudent.length() != 4 );
 
-	cout << "Enter score Math: "; cin >> a.scoreMath;
-	cout << "Enter core Physical: "; cin >> a.scorePhys;
-	cout << "Enter score Technology: "; cin >> a.scoreTech;
+	cout << "Enter score Math: "; 
+	a.scoreMath = a.getIntRange(0.0, 10.0);
+	cout << "Enter core Physical: ";
+	a.scorePhys = a.getIntRange(0.0, 10.0);
+	cout << "Enter score Technology: "; 
+	a.scoreTech = a.getIntRange(0.0, 10.0);;
 
 	a.scoreAverage = (a.scoreMath + a.scorePhys + a.scoreTech) / 3;
 	if (a.scoreAverage >= 8.0)
@@ -100,3 +104,21 @@ ostream& operator << (ostream& out, Student &a)
 	return out;
 }
 
+double Student::getIntRange(double low, double high)
+{
+	double input;
+	while (true)
+	{
+		cin >> input;
+		if (input < low || input > high)
+		{
+			cout << "Value invalid!\n";
+			cout << "\nEnter again: ";
+		}
+		else
+		{
+			break;
+		}
+	}
+	return input;
+ }
